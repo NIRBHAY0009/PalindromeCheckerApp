@@ -1,26 +1,22 @@
-
 public class PalindromeCheckerApp {
 
-    // Main Method – Entry point of the Java application
-    // Static keyword allows JVM to call this method without creating an object
     public static void main(String[] args) {
 
-        // Application name
-        System.out.println("=================================");
-        System.out.println("     Welcome to Palindrome Checker");
-        System.out.println("=================================");
+        // Hardcoded string (String Literal)
+        String word = "madam";
 
-        // Application version
-        System.out.println("Application Version: 1.0.0");
+        // Reverse the string
+        String reversed = "";
 
-        // Application description
-        System.out.println("This application checks whether a given word or sentence is a palindrome.");
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed += word.charAt(i);
+        }
 
-        // Flow control message
-        System.out.println("\nApplication started successfully.");
-        System.out.println("Proceeding to next use case...");
-
-        // Program can continue to next use case here
-        // For now, it simply ends.
+        // Check palindrome using if-else
+        if (word.equals(reversed)) {
+            System.out.println(word + " is a palindrome.");
+        } else {
+            System.out.println(word + " is not a palindrome.");
+        }
     }
 }
