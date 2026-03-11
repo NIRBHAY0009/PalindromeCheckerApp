@@ -1,34 +1,60 @@
-public class PalindromeCheckerApp {
+import java.util.Stack;
 
-    public static boolean isPalindrome(String input) {
-        if (input == null) return false;
+/**
+ * PalindromeChecker Service
+ * Encapsulates the logic for palindrome validation using a Stack-based approach.
+ */
+class PalindromeCheckerApp {
 
-        // 1. Normalize String: Remove non-alphanumeric characters and convert to lowercase
-        // "\\s+" would just remove spaces, but "[^a-zA-Z0-9]" handles spaces, tabs, and punctuation.
-        String cleanString = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    /**
+     * Public API to check for palindromes.
+     * The caller doesn't need to know HOW it's checked (Encapsulation).
+     */
+    public boolean checkPalindrome(String text) {
+        if (text == null) return false;
 
-        // 2. Apply logic (Two-pointer approach)
-        int left = 0;
-        int right = cleanString.length() - 1;
-
-        while (left < right) {
-            if (cleanString.charAt(left) != cleanString.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-
-        return true;
+        String cleanText = preprocess(text);
+        return isStackMatch(cleanText);
     }
 
-    public static void main(String[] args) {
-        String test1 = "A man a plan a canal Panama";
-        String test2 = "Race Car";
-        String test3 = "Hello World";
+    /**
+     * Private helper to handle string normalization (Internal Logic).
+     */
+    private String preprocess(String input) {
+        return input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+    }
 
-        System.out.println("Test 1 ('" + test1 + "'): " + isPalindrome(test1)); // true
-        System.out.println("Test 2 ('" + test2 + "'): " + isPalindrome(test2)); // true
-        System.out.println("Test 3 ('" + test3 + "'): " + isPalindrome(test3)); // false
+    /**
+     * Internal logic using a Stack Data Structure.
+     * Stacks are LIFO (Last-In, First-Out), which naturally reverses data.
+     */
+    private boolean isStackMatch(String input) {
+        Stack<Character> stack = new Stack<>();
+
+        // Push all characters onto the stack
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+
+        // Pop and compare with the original string
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of the service
+        PalindromeChecker checker = new PalindromeChecker();
+
+        // Usage
+        String phrase = "No 'x' in Nixon";
+        boolean result = checker.checkPalindrome(phrase);
+
+        System.out.println("Is '" + phrase + "' a palindrome? " + result);
     }
 }
