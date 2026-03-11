@@ -1,39 +1,34 @@
-import java.util.Scanner;
+public class PalindromeCheckerApp {
 
-public class PalindromeCheckerApp1Z {
+    public static boolean isPalindrome(String input) {
+        if (input == null) return false;
 
-    // Recursive function to check palindrome
-    public static boolean isPalindrome(String str, int start, int end) {
+        // 1. Normalize String: Remove non-alphanumeric characters and convert to lowercase
+        // "\\s+" would just remove spaces, but "[^a-zA-Z0-9]" handles spaces, tabs, and punctuation.
+        String cleanString = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        // Base condition
-        if (start >= end) {
-            return true;
+        // 2. Apply logic (Two-pointer approach)
+        int left = 0;
+        int right = cleanString.length() - 1;
+
+        while (left < right) {
+            if (cleanString.charAt(left) != cleanString.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        // If characters do not match
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
 
     public static void main(String[] args) {
+        String test1 = "A man a plan a canal Panama";
+        String test2 = "Race Car";
+        String test3 = "Hello World";
 
-        Scanner sc = new Scanner(System.in);
-
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
-
-        boolean result = isPalindrome(input, 0, input.length() - 1);
-
-        if (result) {
-            System.out.println("The string is a Palindrome.");
-        } else {
-            System.out.println("The string is NOT a Palindrome.");
-        }
-
-        sc.close();
+        System.out.println("Test 1 ('" + test1 + "'): " + isPalindrome(test1)); // true
+        System.out.println("Test 2 ('" + test2 + "'): " + isPalindrome(test2)); // true
+        System.out.println("Test 3 ('" + test3 + "'): " + isPalindrome(test3)); // false
     }
 }
